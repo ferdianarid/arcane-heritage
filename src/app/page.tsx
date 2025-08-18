@@ -2,13 +2,14 @@ import { AudioPlayer } from "@/components/audio-player";
 import { MarqueeCarousel } from "@/components/card-carousel";
 import { CompanyCarousel } from "@/components/company-carousel";
 import Footer from "@/components/footer";
+import { BlurFade } from "@/components/magicui/blur-fade";
 import {
   ScrollVelocityContainer,
   ScrollVelocityRow,
 } from "@/components/magicui/scroll-based-velocity";
 import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
-import { Circle, DiamondIcon, DiamondPlusIcon } from "lucide-react";
+import { DiamondPlusIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
@@ -32,21 +33,27 @@ export default function Home() {
         />
 
         <div className="w-full md:w-[1000px] px-4 md:px-0 pt-[100px] relative z-10 mx-auto flex flex-col items-center justify-center gap-4">
-          <h1 className="font-normal text-6xl md:text-[140px] leading-[90%] text-center font-italianno">
-            Membuka Tabir Warisan Tersembunyi Nusantara
-          </h1>
-          <p className="text-base md:text-[24px] leading-relaxed text-center font-normal font-jakarta-sans text-white/80">
-            panduan digital Anda untuk menjelajahi kekayaan budaya di setiap
-            penjuru Nusantara. Temukan kisah dan tradisi tersembunyi yang
-            membentuk identitas bangsa.
-          </p>
+          <BlurFade delay={0.5}>
+            <h1 className="font-normal text-6xl md:text-[140px] leading-[90%] text-center font-italianno">
+              Membuka Tabir Warisan Tersembunyi Nusantara
+            </h1>
+          </BlurFade>
+          <BlurFade delay={0.75}>
+            <p className="text-base md:text-[24px] leading-relaxed text-center font-normal font-jakarta-sans text-white/80">
+              panduan digital Anda untuk menjelajahi kekayaan budaya di setiap
+              penjuru Nusantara. Temukan kisah dan tradisi tersembunyi yang
+              membentuk identitas bangsa.
+            </p>
+          </BlurFade>
 
-          <Button
-            variant="default"
-            className="min-h-14 md:min-h-16 text-white hover:cursor-pointer hover:bg-amber-900 mt-10 px-12 bg-amber-700 font-medium font-jakarta-sans text-xl"
-          >
-            Jelajah Sekarang
-          </Button>
+          <BlurFade delay={1}>
+            <Button
+              variant="default"
+              className="min-h-14 md:min-h-16 text-white hover:cursor-pointer hover:bg-amber-900 mt-10 px-12 bg-amber-700 font-medium font-jakarta-sans text-xl"
+            >
+              Jelajah Sekarang
+            </Button>
+          </BlurFade>
         </div>
         <MarqueeCarousel />
       </header>
