@@ -15,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { BlogSection } from "@/components/moleculs/blog-section";
+import { FloatingAudio } from "@/components/floating-audio";
 
 export default function DetailMakanan() {
   return (
@@ -101,6 +102,14 @@ export default function DetailMakanan() {
           ))}
         </div>
       </section>
+
+      <FloatingAudio
+        textToRead="Gudeg, si manis dari Yogyakarta, bukan hanya sekadar makanan. Ia
+          adalah cerminan budaya, sejarah, dan filosofi Jawa yang kaya. Makanan
+          ini telah menjadi ikon kuliner yang tak terpisahkan dari kota
+          istimewa, menarik wisatawan dari seluruh penjuru dunia untuk mencicipi
+          keunikannya."
+      />
 
       <Footer />
     </>
