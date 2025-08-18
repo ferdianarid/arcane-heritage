@@ -25,7 +25,7 @@ export default function Home() {
           alt="hero"
         />
         <Image
-          src="/assets/images/mobile-hero.png"
+          src="/assets/images/hero-mobile.png"
           fill
           className="block md:hidden"
           style={{ objectFit: "cover", backgroundPosition: "left center" }}
