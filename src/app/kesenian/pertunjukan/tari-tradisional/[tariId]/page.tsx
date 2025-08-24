@@ -31,7 +31,7 @@ const getTariTradisionalById = async (id: string) => {
 };
 
 export default async function DetailTari({ params }: DetailTariProps) {
-  const { tariId } = params;
+  const { tariId } = await params;
 
   const detailTari = await getTariTradisionalById(tariId);
 

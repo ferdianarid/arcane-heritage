@@ -31,7 +31,7 @@ const getBuildingById = async (id: string) => {
 };
 
 export default async function DetailBuilding({ params }: DetailBuildingProps) {
-  const { bangunanId } = params;
+  const { bangunanId } = await params;
 
   const detailBuilding = await getBuildingById(bangunanId);
 
