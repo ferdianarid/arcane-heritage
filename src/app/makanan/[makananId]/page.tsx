@@ -16,21 +16,46 @@ import {
 } from "@/components/ui/breadcrumb";
 import { BlogSection } from "@/components/moleculs/blog-section";
 import { FloatingAudio } from "@/components/floating-audio";
+import { notFound } from "next/navigation";
+import { ConciergeBell, MapPin } from "lucide-react";
 
-export default function DetailMakanan() {
+interface DetailMakananProps {
+  params: {
+    makananId: string;
+  };
+}
+
+const getMakananById = async (id: string) => {
+  const makanan = foodData;
+  return makanan.find((food) => food.id.toString() === id);
+};
+
+export default async function DetailMakanan({ params }: DetailMakananProps) {
+  const { makananId } = await params;
+
+  const detailMakanan = await getMakananById(makananId);
+
+  if (!detailMakanan) {
+    notFound();
+  }
   return (
     <>
       <header className="w-full">
-        <div className="w-full relative pb-20 md:pb-20 bg-white">
+        <div className="w-full relative pb-20 md:pb-32 bg-white">
           <Image
-            src="/assets/images/makanan-cover.png"
+            src={detailMakanan.image}
             fill
             style={{ objectFit: "cover" }}
             alt="makanan"
           />
+
+          <div className="absolute inset-x-0 top-0 h-2/3 bg-gradient-to-b from-black to-transparent z-10"></div>
+
+          <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black to-transparent z-10"></div>
+
           <Navbar />
 
-          <div className="w-full px-5 md:px-24 relative z-10 mt-8">
+          <div className="w-full px-5 md:px-24 max-w-[1440px] mx-auto relative z-10 mt-8">
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem>
@@ -42,16 +67,16 @@ export default function DetailMakanan() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Gudeg Jogja</BreadcrumbPage>
+                  <BreadcrumbPage>{detailMakanan?.name}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="z-10 px-4 py-10 md:p-16 mt-16 mx-auto w-fit flex items-start">
+          <div className="px-4 relative z-30 py-10 md:p-16 mt-16 mx-auto w-fit flex items-start">
             <div className="w-full md:w-[700px] mx-auto text-center grid gap-5">
               <BlurFade delay={0.5}>
                 <h1 className="font-normal text-6xl md:text-[140px] leading-[90%] font-italianno text-white">
-                  Gudeg Jogja
+                  {detailMakanan?.name}
                 </h1>
               </BlurFade>
               <BlurFade delay={0.75}>
@@ -59,6 +84,17 @@ export default function DetailMakanan() {
                   Gudeg Jogja: Manisnya Warisan Kuliner Yogyakarta
                 </p>
               </BlurFade>
+
+              <div className="w-fit flex mx-auto gap-10 items-center justify-between">
+                <div className="flex items-center">
+                  <MapPin className="w-4 h-4 mr-1" />
+                  <span>{detailMakanan?.location}</span>
+                </div>
+                <div className="flex items-center">
+                  <ConciergeBell className="w-4 h-4 mr-1" />
+                  <span>{detailMakanan?.category}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -66,27 +102,17 @@ export default function DetailMakanan() {
 
       <section className="w-full px-5 md:px-[300px] max-w-[1440px] mx-auto pt-8 md:pt-16 grid gap-12">
         <p className="text-base md:text-[24px] leading-relaxed font-normal font-jakarta-sans text-white/80">
-          Gudeg, si manis dari Yogyakarta, bukan hanya sekadar makanan. Ia
-          adalah cerminan budaya, sejarah, dan filosofi Jawa yang kaya. Makanan
-          ini telah menjadi ikon kuliner yang tak terpisahkan dari kota
-          istimewa, menarik wisatawan dari seluruh penjuru dunia untuk mencicipi
-          keunikannya.
+          {detailMakanan.description}
         </p>
 
-        <BlogSection
-          title="Sekilas tentang Gudeg Jogja"
-          content="Gudeg adalah hidangan yang terbuat dari nangka muda (disebut juga gori) yang dimasak dengan santan dan bumbu rempah selama berjam-jam. Proses memasak yang lama inilah yang memberikan gudeg tekstur lembut dan rasa yang sangat khas."
-        />
-
-        <BlogSection
-          title="Bahan Dasar & Ciri Khas Pengolahan"
-          content="Gudeg terbuat dari nangka muda yang dimasak dengan santan kelapa, gula aren, dan rempah-rempah. Ciri khasnya adalah proses memasak yang sangat lama (slow-cooked), yang membuat tekstur nangka menjadi sangat lembut dan bumbu meresap sempurna. Ini berbeda dari hidangan nangka lain yang dimasak lebih cepat."
-        />
-
-        <BlogSection
-          title="Tradisi Penyajian & Lauk Pendamping"
-          content="Gudeg tidak disajikan sendirian. Hidangan ini biasanya ditemani oleh lauk pendamping yang menjadi satu kesatuan, seperti nasi, ayam opor, telur pindang, dan sambal goreng krecek. Tradisi penyajian ini menunjukkan bahwa gudeg adalah hidangan komplit dengan kombinasi rasa dan tekstur yang kaya."
-        />
+        {detailMakanan.foodSections &&
+          detailMakanan.foodSections.map((section, index) => (
+            <BlogSection
+              key={index}
+              title={section.title}
+              content={section.content}
+            />
+          ))}
       </section>
 
       <Separator className="my-12" />
@@ -112,6 +138,8 @@ export default function DetailMakanan() {
       />
 
       <Footer />
+
+      {/* <SpeakDock /> */}
     </>
   );
 }

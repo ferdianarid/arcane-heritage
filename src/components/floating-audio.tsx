@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Pause, Volume2 } from "lucide-react";
+import { BorderBeam } from "./magicui/border-beam";
 
 interface AudioPlayerProps {
   textToRead: string;
@@ -46,17 +47,33 @@ export function FloatingAudio({ textToRead }: AudioPlayerProps) {
   };
 
   return (
-    <Button
-      onClick={togglePlayPause}
-      variant="default"
-      className="ml-auto w-12 z-10 bg-[#111] h-12 fixed bottom-4 left-4"
-      aria-label={isPlaying ? "Pause" : "Play"}
-    >
-      {isPlaying ? (
-        <Pause className="h-8 w-8 text-white" />
-      ) : (
-        <Volume2 className="h-8 w-8 text-white" />
-      )}
-    </Button>
+    <>
+      <Button
+        onClick={togglePlayPause}
+        variant="default"
+        className="fixed bottom-5 left-1/2 w-fit z-[999] !px-6 h-12 flex items-center justify-center -translate-x-1/2 bg-black/50 hover:bg-black/80 backdrop-blur-2xl"
+        aria-label={isPlaying ? "Pause" : "Play"}
+      >
+        {isPlaying ? (
+          <>
+            <Pause className="h-8 w-8 text-white" />
+            <h3 className="font-semibold text-white text-base">Playing...</h3>
+          </>
+        ) : (
+          <>
+            <Volume2 className="h-8 w-8 text-white" />
+            <h3 className="font-semibold text-white text-base">Speak</h3>
+          </>
+        )}
+
+        <BorderBeam
+          duration={6}
+          delay={3}
+          size={400}
+          borderWidth={2}
+          className="from-transparent via-blue-800 to-transparent"
+        />
+      </Button>
+    </>
   );
 }

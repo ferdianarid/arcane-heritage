@@ -39,7 +39,7 @@ export const footerLinks = {
 
 export const navigationItems = [
   { name: "Museum", href: "/#museum" },
-  { name: "Bangunan", href: "/#bangunan" },
+  { name: "Bangunan", href: "/bangunan" },
   { name: "Makanan", href: "/makanan" },
-  { name: "Kesenian", href: "/#kesenian" },
+  { name: "Kesenian", href: "/kesenian" },
 ];

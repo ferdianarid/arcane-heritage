@@ -1,0 +1,43 @@
+import Navbar from "@/components/navbar";
+import { BlurFade } from "@/components/magicui/blur-fade";
+import Footer from "@/components/footer";
+import { KesenianCategoryCard } from "@/components/elements/kesenian-category-card";
+import { kesenianCategories } from "@/data/kesenian";
+
+export default function Kesenian() {
+  return (
+    <header className="w-full">
+      <div className="w-full relative pb-20 md:pb-32 bg-black">
+        <Navbar />
+
+        <div className="z-10 px-4 relative md:p-16 mt-10 mx-auto w-fit">
+          <div className="w-full md:w-[70%] mx-auto text-center grid gap-2">
+            <BlurFade delay={0.5}>
+              <h1 className="font-normal text-5xl md:text-[80px] leading-[90%] font-italianno text-white">
+                Jelajahi Kekayaan Seni Indonesia
+              </h1>
+            </BlurFade>
+            <BlurFade delay={0.75}>
+              <p className="text-base md:text-lg leading-relaxed font-normal font-jakarta-sans text-white/80">
+                Jendela menuju kekayaan seni dan budaya Indonesia. Mulai dari
+                tarian dinamis hingga ukiran yang rumit, setiap bentuk seni
+                memiliki cerita dan makna mendalam yang menunggu untuk Anda
+                temukan.
+              </p>
+            </BlurFade>
+          </div>
+        </div>
+
+        <section className="grid grid-cols-1 max-w-[1440px] mx-auto mt-6 md:mt-0 sm:grid-cols-2 w-full px-6 md:px-20 lg:grid-cols-3 gap-5 md:gap-8">
+          {kesenianCategories.map((category, index) => (
+            <BlurFade key={category.id} delay={1 + index * 0.25}>
+              <KesenianCategoryCard {...category} />
+            </BlurFade>
+          ))}
+        </section>
+      </div>
+
+      <Footer />
+    </header>
+  );
+}

@@ -1,6 +1,4 @@
-import { AudioPlayer } from "@/components/audio-player";
 import { MarqueeCarousel } from "@/components/card-carousel";
-import { CompanyCarousel } from "@/components/company-carousel";
 import Footer from "@/components/footer";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import {

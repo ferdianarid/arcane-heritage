@@ -36,7 +36,7 @@ export default function Makanan() {
 
         <BlurFade delay={1}>
           <div className="w-full md:w-[700px] relative z-10 mt-8 md:mt-0 px-4 md:px-0 mx-auto">
-            <SearchInput />
+            <SearchInput type="makanan" />
           </div>
         </BlurFade>
       </div>
