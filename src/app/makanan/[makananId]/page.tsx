@@ -25,15 +25,15 @@ interface DetailMakananProps {
   };
 }
 
-const getMakananById = async (id: string) => {
+const getMakananById = (id: string) => {
   const makanan = foodData;
   return makanan.find((food) => food.id.toString() === id);
 };
 
-export default async function DetailMakanan({ params }: DetailMakananProps) {
-  const { makananId } = await params;
+export default function DetailMakanan({ params }: DetailMakananProps) {
+  const { makananId } = params;
 
-  const detailMakanan = await getMakananById(makananId);
+  const detailMakanan = getMakananById(makananId);
 
   if (!detailMakanan) {
     notFound();

@@ -25,15 +25,15 @@ interface DetailTariProps {
   };
 }
 
-const getTariTradisionalById = async (id: string) => {
+const getTariTradisionalById = (id: string) => {
   const dance = danceData;
   return dance.find((item) => item.id.toString() === id);
 };
 
-export default async function DetailTari({ params }: DetailTariProps) {
-  const { tariId } = await params;
+export default function DetailTari({ params }: DetailTariProps) {
+  const { tariId } = params;
 
-  const detailTari = await getTariTradisionalById(tariId);
+  const detailTari = getTariTradisionalById(tariId);
 
   if (!detailTari) {
     notFound();

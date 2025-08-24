@@ -25,15 +25,15 @@ interface DetailBuildingProps {
   };
 }
 
-const getBuildingById = async (id: string) => {
+const getBuildingById = (id: string) => {
   const building = buildingData;
   return building.find((item) => item.id.toString() === id);
 };
 
-export default async function DetailBuilding({ params }: DetailBuildingProps) {
-  const { bangunanId } = await params;
+export default function DetailBuilding({ params }: DetailBuildingProps) {
+  const { bangunanId } = params;
 
-  const detailBuilding = await getBuildingById(bangunanId);
+  const detailBuilding = getBuildingById(bangunanId);
 
   if (!detailBuilding) {
     notFound();
