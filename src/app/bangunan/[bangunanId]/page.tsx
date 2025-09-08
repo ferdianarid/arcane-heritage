@@ -16,8 +16,12 @@ import { BlogSection } from "@/components/moleculs/blog-section";
 import { FloatingAudio } from "@/components/floating-audio";
 import { notFound } from "next/navigation";
 import { MapPin, Landmark } from "lucide-react";
-import { buildingData } from "@/data/buildings";
 import { BuildingCard } from "@/components/elements/building-card";
+import {
+  getAllBuildings,
+  getBuildingById,
+} from "@/servers/actions/buildings/actions";
+import { getUrlFileImageBuilding } from "@/lib/supabase";
 
 interface DetailBuildingProps {
   params: {
@@ -25,21 +29,19 @@ interface DetailBuildingProps {
   };
 }
 
-const getBuildingById = (id: string) => {
-  const building = buildingData;
-  return building.find((item) => item.id.toString() === id);
-};
-
-export default function DetailBuilding({ params }: DetailBuildingProps) {
+export default async function DetailBuilding({ params }: DetailBuildingProps) {
   const { bangunanId } = params;
 
-  const detailBuilding = getBuildingById(bangunanId);
+  const detailBuilding = await getBuildingById(bangunanId);
+
+  console.log(detailBuilding);
 
   if (!detailBuilding) {
     notFound();
   }
 
-  const relatedBuildings = buildingData
+  const allBuildings = await getAllBuildings();
+  const relatedBuildings = allBuildings
     .filter((building) => building.id !== detailBuilding.id)
     .slice(0, 3);
 
@@ -48,7 +50,7 @@ export default function DetailBuilding({ params }: DetailBuildingProps) {
       <header className="w-full">
         <div className="w-full relative pb-20 md:pb-32 bg-white">
           <Image
-            src={detailBuilding.image}
+            src={getUrlFileImageBuilding(detailBuilding.image)}
             fill
             style={{ objectFit: "cover" }}
             alt={detailBuilding.name}
@@ -80,12 +82,12 @@ export default function DetailBuilding({ params }: DetailBuildingProps) {
           <div className="px-4 relative z-30 py-10 md:p-16 mt-16 mx-auto w-fit flex items-start">
             <div className="w-full md:w-[700px] mx-auto text-center grid gap-5">
               <BlurFade delay={0.5}>
-                <h1 className="font-normal text-6xl md:text-[140px] leading-[90%] font-italianno text-white">
+                <h1 className="font-normal text-6xl md:text-[100px] leading-[90%] font-italianno text-white">
                   {detailBuilding?.name}
                 </h1>
               </BlurFade>
               <BlurFade delay={0.75}>
-                <p className="text-base md:text-[24px] leading-relaxed font-normal font-jakarta-sans text-white/80">
+                <p className="text-base md:text-[20px] line-clamp-2 leading-relaxed font-normal font-jakarta-sans text-white/80">
                   {detailBuilding?.description}
                 </p>
               </BlurFade>
@@ -106,18 +108,17 @@ export default function DetailBuilding({ params }: DetailBuildingProps) {
       </header>
 
       <section className="w-full px-5 md:px-[300px] max-w-[1440px] mx-auto pt-8 md:pt-16 grid gap-12">
-        <p className="text-base md:text-[24px] leading-relaxed font-normal font-jakarta-sans text-white/80">
+        <p className="text-base md:text-[20px] leading-relaxed font-normal font-jakarta-sans text-white/80">
           {detailBuilding.description}
         </p>
 
-        {detailBuilding.blogSections &&
-          detailBuilding.blogSections.map((section, index) => (
-            <BlogSection
-              key={index}
-              title={section.title}
-              content={section.content}
-            />
-          ))}
+        {detailBuilding.blogSections.map((section) => (
+          <BlogSection
+            key={section.id}
+            title={section.title}
+            content={section.content}
+          />
+        ))}
       </section>
 
       <Separator className="my-12" />
@@ -134,16 +135,11 @@ export default function DetailBuilding({ params }: DetailBuildingProps) {
         </div>
       </section>
 
-      <section className="w-full px-5 md:px-[300px] max-w-[1440px] mx-auto pb-20 md:pb-[100px]">
-        <iframe
-          width="600"
-          height="400"
-          allowFullScreen
-          src="https://cdn.pannellum.org/2.5/pannellum.htm#panorama=https://pannellum.org/images/alma.jpg"
-        ></iframe>
-      </section>
-
-      <FloatingAudio textToRead={detailBuilding.description} />
+      {!detailBuilding.description ? (
+        ""
+      ) : (
+        <FloatingAudio textToRead={detailBuilding.description} />
+      )}
 
       <Footer />
     </>

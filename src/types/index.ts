@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface CarouselItem {
   image: string;
   title: string;
@@ -38,10 +39,10 @@ export interface FoodItem {
   name: string;
   image: string;
   location: string;
-  description: string;
-  rating: number;
-  reviews: number;
-  category: string;
+  description: string | any;
+  rating: number | any;
+  reviews: number | any;
+  category: string | any;
   foodSections?: FoodSection[];
 }
 
@@ -51,6 +52,12 @@ export interface KesenianCategoryCardProps {
   description: string;
   href: string;
   coverImage: string;
+}
+
+export interface QuizCategoryCardProps {
+  id: string;
+  name: string;
+  href?: string;
 }
 
 export interface SeniPertunjukan {

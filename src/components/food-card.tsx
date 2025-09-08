@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { FoodItem } from "@/types";
+import { getUrlFileImageFood } from "@/lib/supabase";
 
 interface FoodCardProps {
   food: FoodItem;
@@ -28,7 +29,7 @@ export const FoodCard = ({ food }: FoodCardProps) => {
         <div className="w-full p-4 bg-[#121212]">
           <div className="w-full h-[200px] relative">
             <Image
-              src={food.image}
+              src={getUrlFileImageFood(food.image)}
               fill
               className="rounded-md"
               style={{ objectFit: "cover" }}
