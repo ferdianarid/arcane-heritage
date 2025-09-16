@@ -23,13 +23,11 @@ import {
 } from "@/servers/actions/buildings/actions";
 import { getUrlFileImageBuilding } from "@/lib/supabase";
 
-interface DetailBuildingProps {
-  params: {
-    bangunanId: string;
-  };
-}
-
-export default async function DetailBuilding({ params }: DetailBuildingProps) {
+export default async function DetailBuilding({
+  params,
+}: {
+  params: { bangunanId: string };
+}) {
   const { bangunanId } = params;
 
   const detailBuilding = await getBuildingById(bangunanId);
