@@ -4,8 +4,11 @@ import { BlurFade } from "@/components/magicui/blur-fade";
 import SearchInput from "@/components/moleculs/search-input";
 import { FilterAndSort } from "@/components/select-filter";
 import Footer from "@/components/footer";
+import { getAllFoods } from "@/servers/actions/foods/actions";
 
-export default function Makanan() {
+export default async function Makanan() {
+  const foods = await getAllFoods();
+  console.log(foods);
   return (
     <header className="w-full">
       <div className="w-full relative pb-20 md:pb-32 bg-white">
@@ -41,7 +44,7 @@ export default function Makanan() {
         </BlurFade>
       </div>
 
-      <FilterAndSort />
+      <FilterAndSort foods={foods} />
 
       <Footer />
     </header>

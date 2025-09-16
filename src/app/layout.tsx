@@ -3,6 +3,8 @@ import { Plus_Jakarta_Sans, Italianno, Odor_Mean_Chey } from "next/font/google";
 import { ThemesProvider } from "./providers/themes-provider";
 import "./globals.css";
 import LenisProvider from "./providers/lenis-provider";
+import { Toaster } from "@/components/ui/sonner";
+import AuthProvider from "./providers/auth-provider";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-jakarta-sans",
@@ -40,7 +42,12 @@ export default function RootLayout({
         className={`${plusJakartaSans.variable} ${italianno.variable} ${odorMeanChey} antialiased`}
       >
         <LenisProvider>
-          <ThemesProvider>{children}</ThemesProvider>
+          <ThemesProvider>
+            <AuthProvider>
+              {children}
+              <Toaster position="bottom-right" />
+            </AuthProvider>
+          </ThemesProvider>
         </LenisProvider>
       </body>
     </html>

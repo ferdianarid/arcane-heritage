@@ -1,0 +1,200 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------
+// MODELS FROM INTERFACE TYPES
+// ----------------------------------------------------
+
+model Company {
+  id    Int    @id @default(autoincrement())
+  name  String @db.VarChar(255)
+  image String @db.VarChar(255)
+}
+
+model Building {
+  id            String   @id @default(cuid())
+  name          String
+  image         String
+  location      String
+  description   String?
+  panoramaImage String?
+  rating        Float?
+  reviews       Int?
+  category      String?
+  blogSections  BlogSection[]
+}
+
+model Food {
+  id            String       @id @default(cuid())
+  name          String
+  image         String
+  location      String
+  description   String?
+  rating        Float?
+  reviews       Int?
+  category      String?
+  foodSections  FoodSection[]
+}
+
+model Dance {
+  id            String         @id @default(cuid())
+  name          String
+  image         String
+  location      String
+  description   String?
+  duration      String?
+  dancers       String?
+  category      String?
+  blogSections  DanceSection[]
+}
+
+// ----------------------------------------------------
+// MODELS FOR NESTED DATA (BLOGS & SECTIONS)
+// ----------------------------------------------------
+
+model BlogSection {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  buildingId  String
+  building    Building @relation(fields: [buildingId], references: [id])
+}
+
+model FoodSection {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+  foodId  String
+  food    Food   @relation(fields: [foodId], references: [id])
+}
+
+model DanceSection {
+  id      Int    @id @default(autoincrement())
+  title   String
+  content String
+  danceId String
+  dance   Dance  @relation(fields: [danceId], references: [id])
+}
+
+// ----------------------------------------------------
+// KATEGORI & ITEM LAINNYA
+// ----------------------------------------------------
+
+model KesenianCategory {
+  id          String @id @default(cuid())
+  title       String
+  description String?
+  href        String
+  coverImage  String
+}
+
+model SeniPertunjukan {
+  id          Int    @id @default(autoincrement())
+  title       String
+  href        String
+  description String?
+  coverImage  String
+}
+
+// -----------------------------------
+// QUIZ INTERACTIVE
+// -----------------------------------
+
+model QuizCategory {
+  id       String         @id @default(cuid())
+  name     String         @unique
+  quizzes  QuizQuestion[]
+}
+
+model QuizQuestion {
+  id          String       @id @default(cuid())
+  question    String
+  options     String[]
+  answer      String
+  explanation String?
+  categoryId  String
+  category    QuizCategory @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime     @default(now())
+  attempts    QuizAttempt[]
+}
+
+model QuizAttempt {
+  id        String       @id @default(cuid())
+  quizId    String
+  quiz      QuizQuestion @relation(fields: [quizId], references: [id])
+  chosen    String
+  correct   Boolean
+  createdAt DateTime     @default(now())
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+
+  firstName     String
+  lastName      String
+  password      String? 
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}

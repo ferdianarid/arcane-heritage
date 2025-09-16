@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import React from "react";
@@ -15,16 +16,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { getUrlFileImageBuilding } from "@/lib/supabase";
+import { Lens } from "../magicui/lens";
 
 interface BuildingItem {
   id: string;
   name: string;
   image: string;
   location: string;
-  description: string;
-  rating: number;
-  reviews: number;
-  category: string;
+  description: string | null;
+  rating: number | any;
+  reviews: number | any;
+  category: string | any;
 }
 
 interface BuildingCardProps {
@@ -36,15 +39,22 @@ export const BuildingCard = ({ building }: BuildingCardProps) => {
     <Card className="w-full mx-auto !py-0 !rounded-md !gap-0 border-none bg-[#121212]">
       <Dialog>
         <div className="w-full p-4 bg-[#121212]">
-          <div className="w-full h-[200px] relative">
-            <Image
-              src={building.image}
-              fill
-              className="rounded-md"
-              style={{ objectFit: "cover" }}
-              alt={building.name}
-            />
-          </div>
+          <Lens
+            zoomFactor={2}
+            lensSize={150}
+            isStatic={false}
+            ariaLabel="Zoom Area"
+          >
+            <div className="w-full h-[200px] relative">
+              <Image
+                src={getUrlFileImageBuilding(building.image)}
+                fill
+                className="rounded-md"
+                style={{ objectFit: "cover" }}
+                alt={building.name}
+              />
+            </div>
+          </Lens>
         </div>
 
         <CardContent className="!p-0 h-full">
@@ -93,12 +103,12 @@ export const BuildingCard = ({ building }: BuildingCardProps) => {
             </div>
             <div className="w-full grid gap-2">
               <DialogTrigger asChild>
-                <Button className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
+                <Button className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
                   Preview
                 </Button>
               </DialogTrigger>
               <Link href={`/bangunan/${building.id}`} className="mt-auto">
-                <Button className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
+                <Button className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
                   Pelajari
                 </Button>
               </Link>
@@ -106,10 +116,10 @@ export const BuildingCard = ({ building }: BuildingCardProps) => {
           </div>
         </CardContent>
         <DialogContent className="sm:max-w-md !p-0">
-          <DialogHeader className="p-6 pb-0">
+          <DialogHeader className="p-6 pb-0 !gap-0">
             <div className="w-full h-48 relative mb-4">
               <Image
-                src={building.image}
+                src={getUrlFileImageBuilding(building.image)}
                 fill
                 className="rounded-md"
                 style={{ objectFit: "cover" }}

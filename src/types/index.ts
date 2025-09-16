@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface CarouselItem {
   image: string;
   title: string;
@@ -38,10 +39,10 @@ export interface FoodItem {
   name: string;
   image: string;
   location: string;
-  description: string;
-  rating: number;
-  reviews: number;
-  category: string;
+  description: string | any;
+  rating: number | any;
+  reviews: number | any;
+  category: string | any;
   foodSections?: FoodSection[];
 }
 
@@ -51,6 +52,12 @@ export interface KesenianCategoryCardProps {
   description: string;
   href: string;
   coverImage: string;
+}
+
+export interface QuizCategoryCardProps {
+  id: string;
+  name: string;
+  href?: string;
 }
 
 export interface SeniPertunjukan {
@@ -76,4 +83,35 @@ export interface DanceItem {
   dancers: string;
   category: string;
   blogSections: DanceSection[];
+}
+
+// types.ts
+
+/**
+ * Interface untuk status notifikasi pengguna.
+ */
+export interface NotificationsState {
+  email: boolean;
+  push: boolean;
+  sound: boolean;
+}
+
+/**
+ * Interface untuk data pengaturan utama.
+ */
+export interface SettingsState {
+  darkMode: boolean;
+  notifications: NotificationsState;
+  language: string;
+}
+
+/**
+ * Interface untuk data navigasi sidebar.
+ */
+export interface SettingsSectionData {
+  id: string;
+  label: string;
+  // Di sini kita bisa menggunakan tipe React.ElementType atau React.ComponentType
+  // untuk properti 'icon' agar dapat di-render sebagai komponen.
+  icon: React.ElementType;
 }

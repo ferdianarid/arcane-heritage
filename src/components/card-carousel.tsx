@@ -26,7 +26,7 @@ export function MarqueeCarousel() {
                 src={item.image}
                 alt={item.title}
                 fill
-                objectFit="cover"
+                style={{ objectFit: "cover" }}
                 className="rounded-t-xl"
               />
               <CardContent className="p-6 relative z-10 mt-auto">

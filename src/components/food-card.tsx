@@ -16,6 +16,8 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { FoodItem } from "@/types";
+import { getUrlFileImageFood } from "@/lib/supabase";
+import { Lens } from "./magicui/lens";
 
 interface FoodCardProps {
   food: FoodItem;
@@ -26,15 +28,22 @@ export const FoodCard = ({ food }: FoodCardProps) => {
     <Card className="w-full mx-auto !py-0 !rounded-md !gap-0 border-none bg-[#121212]">
       <Dialog>
         <div className="w-full p-4 bg-[#121212]">
-          <div className="w-full h-[200px] relative">
-            <Image
-              src={food.image}
-              fill
-              className="rounded-md"
-              style={{ objectFit: "cover" }}
-              alt={food.name}
-            />
-          </div>
+          <Lens
+            zoomFactor={2}
+            lensSize={150}
+            isStatic={false}
+            ariaLabel="Zoom Area"
+          >
+            <div className="w-full h-[200px] relative">
+              <Image
+                src={getUrlFileImageFood(food.image)}
+                fill
+                className="rounded-md"
+                style={{ objectFit: "cover" }}
+                alt={food.name}
+              />
+            </div>
+          </Lens>
         </div>
 
         <CardContent className="!p-0 h-full">
@@ -81,12 +90,12 @@ export const FoodCard = ({ food }: FoodCardProps) => {
             </div>
             <div className="w-full grid gap-2">
               <DialogTrigger asChild>
-                <Button className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
+                <Button className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
                   Preview
                 </Button>
               </DialogTrigger>
               <Link href={`/makanan/${food.id}`} className="mt-auto">
-                <Button className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
+                <Button className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
                   Pelajari
                 </Button>
               </Link>
@@ -97,7 +106,7 @@ export const FoodCard = ({ food }: FoodCardProps) => {
           <DialogHeader className="p-6 pb-0">
             <div className="w-full h-48 relative mb-4">
               <Image
-                src={food.image}
+                src={getUrlFileImageFood(food.image)}
                 fill
                 className="rounded-md"
                 style={{ objectFit: "cover" }}
@@ -107,16 +116,16 @@ export const FoodCard = ({ food }: FoodCardProps) => {
             <div className="w-full flex items-center gap-2 mb-2">
               <div className="flex items-center gap-2">
                 <Star className="w-5 h-5 fill-yellow-400 text-yellow-400" />
-                <span className="font-semibold">{food.reviews}</span>
+                <span className="font-semibold">{food.rating}</span>
               </div>
               <div className="flex items-center text-sm text-white/70 gap-2">
                 <span>( {food.reviews} Reviews )</span>
               </div>
             </div>
-            <DialogTitle className="text-white text-2xl">
+            <DialogTitle className="text-white text-left text-2xl">
               {food.name}
             </DialogTitle>
-            <DialogDescription className="text-white/70 leading-normal tracking-wide">
+            <DialogDescription className="text-white/70 text-left leading-normal tracking-wide">
               {food.description}
             </DialogDescription>
           </DialogHeader>
