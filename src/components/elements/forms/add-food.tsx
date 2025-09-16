@@ -15,7 +15,11 @@ import { Label } from "@/components/ui/label";
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" disabled={pending}>
+    <Button
+      type="submit"
+      disabled={pending}
+      className="bg-green-600 hover:bg-green-700 py-3 text-white"
+    >
       {pending ? "Adding food..." : "Add Food"}
     </Button>
   );
@@ -45,8 +49,7 @@ export function AddFoodForm() {
       action={formAction}
       className="mt-4 flex w-full max-w-[700px] flex-col gap-4 phone:my-4 pb-5 mx-auto"
     >
-      {/* Upload Image Section */}
-      <div className="relative w-[220px] flex aspect-square flex-col items-center justify-center gap-2 rounded-lg bg-[#1b1b1b]">
+      <div className="relative w-[180px] flex aspect-square flex-col items-center justify-center gap-2 rounded-lg bg-[#1b1b1b]">
         <input
           id="file-upload"
           name="image"
@@ -73,7 +76,6 @@ export function AddFoodForm() {
         )}
       </div>
 
-      {/* Name + Location */}
       <div className="grid w-full grid-cols-2 gap-4">
         <LabelInputContainer>
           <Label htmlFor="name">Nama Makanan</Label>
@@ -86,7 +88,6 @@ export function AddFoodForm() {
         </LabelInputContainer>
       </div>
 
-      {/* Description */}
       <LabelInputContainer>
         <Label htmlFor="description">Deskripsi</Label>
         <Textarea
@@ -97,7 +98,6 @@ export function AddFoodForm() {
         />
       </LabelInputContainer>
 
-      {/* Rating, Reviews, Category */}
       <div className="grid w-full grid-cols-3 gap-4">
         <LabelInputContainer>
           <Label htmlFor="rating">Rating (0-5)</Label>

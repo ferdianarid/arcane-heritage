@@ -32,6 +32,7 @@ import {
 } from "../ui/dialog";
 import { AddFoodForm } from "../elements/forms/add-food";
 import { FoodCard } from "./food-card";
+import EmptyStateResult from "../elements/empty-state-result";
 
 interface FoodListProps {
   foods: Food[];
@@ -51,6 +52,7 @@ export function FoodListDashboard({ foods }: FoodListProps) {
   const searchParam = params.get("search") || "";
 
   const [searchInput, setSearchInput] = useState(searchParam);
+  const [isAddFoodDialogOpen, setIsAddFoodDialogOpen] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -115,6 +117,17 @@ export function FoodListDashboard({ foods }: FoodListProps) {
     return result;
   }, [foods, searchParam, locationParam, sortParam]);
 
+  const handleClearSearch = () => {
+    setSearchInput("");
+    const newParams = new URLSearchParams(params.toString());
+    newParams.delete("search");
+    router.push(`?${newParams.toString()}`);
+  };
+
+  const handleAddFood = () => {
+    setIsAddFoodDialogOpen(true);
+  };
+
   return (
     <div className="flex flex-col gap-8 w-full">
       <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -177,7 +190,10 @@ export function FoodListDashboard({ foods }: FoodListProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Dialog>
+          <Dialog
+            open={isAddFoodDialogOpen}
+            onOpenChange={setIsAddFoodDialogOpen}
+          >
             <DialogTrigger asChild>
               <Button className="min-h-12 bg-green-600 text-white font-medium hover:bg-green-700">
                 <PlusIcon />
@@ -200,19 +216,30 @@ export function FoodListDashboard({ foods }: FoodListProps) {
         </div>
       </div>
 
-      <p className="text-sm font-normal text-white/70">
-        Menampilkan{" "}
-        <span className="font-bold text-white">
-          {filteredAndSortedFoods.length}
-        </span>{" "}
-        data Makanan
-      </p>
+      {filteredAndSortedFoods.length > 0 && (
+        <p className="text-sm font-normal text-white/70">
+          Menampilkan{" "}
+          <span className="font-bold text-white">
+            {filteredAndSortedFoods.length}
+          </span>{" "}
+          data Makanan
+        </p>
+      )}
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5 pb-24">
-        {filteredAndSortedFoods.map((item) => (
-          <FoodCard key={item.id} food={item} />
-        ))}
-      </div>
+      {filteredAndSortedFoods.length === 0 ? (
+        <EmptyStateResult
+          searchQuery={searchParam}
+          onAddItem={handleAddFood}
+          onClearSearch={handleClearSearch}
+          category="food"
+        />
+      ) : (
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5 pb-24">
+          {filteredAndSortedFoods.map((item) => (
+            <FoodCard key={item.id} food={item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

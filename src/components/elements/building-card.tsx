@@ -103,12 +103,12 @@ export const BuildingCard = ({ building }: BuildingCardProps) => {
             </div>
             <div className="w-full grid gap-2">
               <DialogTrigger asChild>
-                <Button className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
+                <Button className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
                   Preview
                 </Button>
               </DialogTrigger>
               <Link href={`/bangunan/${building.id}`} className="mt-auto">
-                <Button className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
+                <Button className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200">
                   Pelajari
                 </Button>
               </Link>

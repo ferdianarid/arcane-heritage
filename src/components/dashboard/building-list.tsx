@@ -32,6 +32,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { AddBuildingForm } from "../elements/forms/add-building";
+import EmptyStateResult from "../elements/empty-state-result";
 
 interface BuildingListProps {
   buildings: Building[];
@@ -51,6 +52,7 @@ export function BuildingListDashboard({ buildings }: BuildingListProps) {
   const searchParam = params.get("search") || "";
 
   const [searchInput, setSearchInput] = useState(searchParam);
+  const [isAddBuildingModal, setIsAddBuildingModal] = useState(false);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -117,6 +119,17 @@ export function BuildingListDashboard({ buildings }: BuildingListProps) {
     return result;
   }, [buildings, searchParam, locationParam, sortParam]);
 
+  const handleClearSearch = () => {
+    setSearchInput("");
+    const newParams = new URLSearchParams(params.toString());
+    newParams.delete("search");
+    router.push(`?${newParams.toString()}`);
+  };
+
+  const handleAddBuilding = () => {
+    setIsAddBuildingModal(true);
+  };
+
   return (
     <div className="flex flex-col gap-8 w-full">
       <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -179,7 +192,10 @@ export function BuildingListDashboard({ buildings }: BuildingListProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Dialog>
+          <Dialog
+            open={isAddBuildingModal}
+            onOpenChange={setIsAddBuildingModal}
+          >
             <DialogTrigger asChild>
               <Button className="min-h-12 bg-green-600 text-white font-medium hover:bg-green-700">
                 <PlusIcon />
@@ -210,11 +226,20 @@ export function BuildingListDashboard({ buildings }: BuildingListProps) {
         data Building
       </p>
 
-      <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5 pb-24">
-        {filteredAndSortedBuildings.map((item) => (
-          <BuildingCard key={item.id} building={item} />
-        ))}
-      </div>
+      {filteredAndSortedBuildings.length === 0 ? (
+        <EmptyStateResult
+          searchQuery={searchParam}
+          onAddItem={handleAddBuilding}
+          onClearSearch={handleClearSearch}
+          category="building"
+        />
+      ) : (
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5 pb-24">
+          {filteredAndSortedBuildings.map((item) => (
+            <BuildingCard key={item.id} building={item} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

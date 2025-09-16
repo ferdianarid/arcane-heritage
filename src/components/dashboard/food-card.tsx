@@ -112,14 +112,14 @@ export const FoodCard = ({ food }: FoodCardProps) => {
           <div className="w-full grid gap-2">
             <Button
               onClick={() => setOpenUpdate(true)}
-              className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200"
+              className="w-full bg-[#252525] hover:bg-[#222222] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200"
             >
               <SquarePen />
               Update
             </Button>
             <Button
               onClick={() => setOpenDelete(true)}
-              className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-5 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200"
+              className="w-full bg-[#7b3636] hover:bg-[#672929] text-white font-semibold !py-3 rounded-md shadow-md transform hover:scale-[1.02] transition-all duration-200"
             >
               <Trash2 />
               Delete

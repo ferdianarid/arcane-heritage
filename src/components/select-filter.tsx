@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { foodData } from "@/data/foods-and-drinks";
 import { useState, useEffect } from "react";
 import { FoodCard } from "@/components/food-card";
 import {
@@ -20,16 +19,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal } from "lucide-react";
+import { FoodItem } from "@/types";
 
-export function FilterAndSort() {
+interface Foods {
+  foods: Array<FoodItem>;
+}
+
+export function FilterAndSort({ foods }: Foods) {
   const [selectedLocation, setSelectedLocation] = useState("all");
   const [sortOrder, setSortOrder] = useState("asc");
-  const [filteredFoods, setFilteredFoods] = useState(foodData);
+  const [filteredFoods, setFilteredFoods] = useState(foods);
 
-  const locations = ["all", ...new Set(foodData.map((food) => food.location))];
+  const locations = ["all", ...new Set(foods.map((food) => food.location))];
 
   useEffect(() => {
-    let sortedAndFiltered = [...foodData];
+    let sortedAndFiltered = [...foods];
 
     if (selectedLocation !== "all") {
       sortedAndFiltered = sortedAndFiltered.filter(
@@ -44,7 +48,7 @@ export function FilterAndSort() {
     }
 
     setFilteredFoods(sortedAndFiltered);
-  }, [selectedLocation, sortOrder]);
+  }, [foods, selectedLocation, sortOrder]);
 
   return (
     <div className="flex flex-col gap-8 w-full md:max-w-[1440px] mx-auto pt-12 md:pt-24 px-4 md:px-24">

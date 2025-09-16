@@ -188,13 +188,6 @@ button:active {
   transform: translateY(0);
 }
 
-/* Improved focus states */
-button:focus,
-input:focus {
-  outline: 2px solid #ff6b35;
-  outline-offset: 2px;
-}
-
 /* Better text rendering */
 body {
   font-feature-settings: "liga", "kern";

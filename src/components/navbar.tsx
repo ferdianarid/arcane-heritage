@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -21,10 +22,14 @@ import Image from "next/image";
 import { navigationItems } from "@/data/navigation";
 import { BlurFade } from "./magicui/blur-fade";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import UserDropdown from "./atoms/user-dropdown";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,7 +56,7 @@ export default function Navbar() {
       <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-0 md:px-0 xl:px-6">
         <NavigationMenu className="hidden lg:flex w-full items-center justify-between">
           <NavigationMenuList className="flex space-x-12">
-            {navigationItems.slice(0, 2).map((item) => (
+            {navigationItems.slice(0, 3).map((item) => (
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuLink
                   asChild
@@ -86,7 +91,7 @@ export default function Navbar() {
 
         <NavigationMenu className="hidden lg:flex w-full items-center justify-between">
           <NavigationMenuList className="flex space-x-12">
-            {navigationItems.slice(2, 4).map((item) => (
+            {navigationItems.slice(3, 5).map((item) => (
               <NavigationMenuItem key={item.name}>
                 <NavigationMenuLink
                   asChild
@@ -103,6 +108,21 @@ export default function Navbar() {
                 </NavigationMenuLink>
               </NavigationMenuItem>
             ))}
+            {status === "loading" && (
+              <h3 className="font-medium text-base text-white">Loading..</h3>
+            )}
+            {!session ? (
+              <Link
+                href="/signin"
+                className={`font-italianno font-medium text-white/80 transition-all duration-300 hover:text-white ${
+                  isScrolled ? "text-[24px]" : "text-[32px]"
+                }`}
+              >
+                Sign In
+              </Link>
+            ) : (
+              <UserDropdown session={session as any} />
+            )}
           </NavigationMenuList>
         </NavigationMenu>
 

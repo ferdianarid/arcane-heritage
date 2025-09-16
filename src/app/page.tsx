@@ -75,7 +75,7 @@ export default function Home() {
                   src="/assets/images/bali.png"
                   alt="Bali, Indonesia"
                   fill
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   className="rounded-t-xl"
                 />
                 <div className="p-6 relative z-10 mt-auto">
@@ -116,7 +116,7 @@ export default function Home() {
                   src="/assets/images/temple.png"
                   alt="Candi Peninggalan"
                   fill
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                   className="rounded-t-xl"
                 />
                 <div className="p-6 relative z-10 mt-auto">

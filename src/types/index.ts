@@ -84,3 +84,34 @@ export interface DanceItem {
   category: string;
   blogSections: DanceSection[];
 }
+
+// types.ts
+
+/**
+ * Interface untuk status notifikasi pengguna.
+ */
+export interface NotificationsState {
+  email: boolean;
+  push: boolean;
+  sound: boolean;
+}
+
+/**
+ * Interface untuk data pengaturan utama.
+ */
+export interface SettingsState {
+  darkMode: boolean;
+  notifications: NotificationsState;
+  language: string;
+}
+
+/**
+ * Interface untuk data navigasi sidebar.
+ */
+export interface SettingsSectionData {
+  id: string;
+  label: string;
+  // Di sini kita bisa menggunakan tipe React.ElementType atau React.ComponentType
+  // untuk properti 'icon' agar dapat di-render sebagai komponen.
+  icon: React.ElementType;
+}

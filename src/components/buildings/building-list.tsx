@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { SlidersHorizontal } from "lucide-react";
 import { BuildingCard } from "../elements/building-card";
 import { Building } from "@/generated/prisma";
+import { EmptyState } from "../elements/empty-state";
 
 interface BuildingListProps {
   buildings: Building[];
@@ -54,9 +55,9 @@ export function BuildingList({ buildings }: BuildingListProps) {
   }, [buildings, selectedLocation, sortOrder]);
 
   return (
-    <div className="flex flex-col gap-8 px-24 mt-20 w-full">
-      <div className="w-full flex items-center justify-between">
-        <div className="w-fit grid gap-1">
+    <div className="flex flex-col gap-8 px-6 md:px-24 mt-20 w-full">
+      <div className="w-full flex flex-col md:flex-row gap-6 items-center justify-between">
+        <div className="w-full md:w-fit grid gap-1">
           <h1 className="font-bold text-white text-2xl">Bangunan</h1>
           <p className="text-sm leading-relaxed font-normal font-jakarta-sans text-white/80">
             Bangunan-bangunan bersejarah yang ada di Indonesia
@@ -106,9 +107,16 @@ export function BuildingList({ buildings }: BuildingListProps) {
       </div>
 
       <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5 pb-24">
-        {filteredAndSortedBuildings.map((item) => (
-          <BuildingCard key={item.id} building={item} />
-        ))}
+        {filteredAndSortedBuildings.length > 0 ? (
+          filteredAndSortedBuildings.map((item) => (
+            <BuildingCard key={item.id} building={item} />
+          ))
+        ) : (
+          <EmptyState
+            title="Belum ada bangunan"
+            description="Data bangunan belum tersedia atau tidak ditemukan."
+          />
+        )}
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import { QuizCategoryCard } from "@/components/elements/quiz-category-card";
 
 export default async function QuizMainPage() {
   const quizCategory = await getAllCategories();
-  console.log(quizCategory);
+
   return (
     <header className="w-full">
       <div className="w-full relative pb-20 md:pb-32 bg-black">
@@ -31,11 +31,22 @@ export default async function QuizMainPage() {
         </div>
 
         <section className="grid grid-cols-1 max-w-[1440px] mx-auto mt-6 md:mt-0 sm:grid-cols-2 w-full px-6 md:px-32 lg:grid-cols-2 gap-5 md:gap-8">
-          {quizCategory.map((category, index) => (
-            <BlurFade key={category.id} delay={1 + index * 0.25}>
-              <QuizCategoryCard {...category} href={`/quiz/${category.id}`} />
-            </BlurFade>
-          ))}
+          {quizCategory.length > 0 ? (
+            quizCategory.map((category, index) => (
+              <BlurFade key={category.id} delay={1 + index * 0.25}>
+                <QuizCategoryCard {...category} href={`/quiz/${category.id}`} />
+              </BlurFade>
+            ))
+          ) : (
+            <div className="col-span-full flex flex-col items-center justify-center py-20 text-center">
+              <h2 className="text-2xl font-semibold text-white mb-2">
+                Belum ada quiz
+              </h2>
+              <p className="text-white/70 text-base md:text-lg">
+                Quiz akan segera hadir, nantikan update selanjutnya!
+              </p>
+            </div>
+          )}
         </section>
       </div>
 

@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Select,
@@ -31,6 +32,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import FormAddQuiz from "../elements/forms/add-quiz";
+import EmptyStateQuiz from "../elements/empty-state-quiz";
 
 interface QuizListProps {
   quizzes: Quiz[];
@@ -48,6 +50,11 @@ export function QuizListDashboard({ quizzes, quizCategory }: QuizListProps) {
 
   const categoryParam = params.get("category") || "all";
   const sortParam = params.get("sortBy") || "newest";
+
+  const searchParam = params.get("search") || "";
+
+  const [searchInput, setSearchInput] = useState(searchParam);
+  const [isAddQuizModal, setIsAddQuizModal] = useState(false);
 
   const setQueryParam = (key: string, value: string) => {
     const newParams = new URLSearchParams(params.toString());
@@ -98,6 +105,17 @@ export function QuizListDashboard({ quizzes, quizCategory }: QuizListProps) {
 
     return result;
   }, [quizzes, categoryParam, sortParam]);
+
+  const handleClearSearch = () => {
+    setSearchInput("");
+    const newParams = new URLSearchParams(params.toString());
+    newParams.delete("search");
+    router.push(`?${newParams.toString()}`);
+  };
+
+  const handleAddQuiz = () => {
+    setIsAddQuizModal(true);
+  };
 
   return (
     <div className="flex flex-col gap-8 w-full">
@@ -160,7 +178,7 @@ export function QuizListDashboard({ quizzes, quizCategory }: QuizListProps) {
           </DropdownMenu>
 
           {/* Add Quiz Button */}
-          <Dialog>
+          <Dialog open={isAddQuizModal} onOpenChange={setIsAddQuizModal}>
             <DialogTrigger asChild>
               <Button className="min-h-12 bg-green-600 text-white font-medium hover:bg-green-700">
                 <PlusIcon />
@@ -191,12 +209,19 @@ export function QuizListDashboard({ quizzes, quizCategory }: QuizListProps) {
         Quiz item
       </p>
 
-      {/* Quiz Grid */}
-      <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5 pb-24">
-        {filteredAndSortedQuizzes.map((quiz) => (
-          <QuizCard key={quiz.id} quiz={quiz} />
-        ))}
-      </div>
+      {filteredAndSortedQuizzes.length === 0 ? (
+        <EmptyStateQuiz
+          searchQuery={searchParam}
+          onAddQuiz={handleAddQuiz}
+          onClearSearch={handleClearSearch}
+        />
+      ) : (
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-5 pb-24">
+          {filteredAndSortedQuizzes.map((quiz) => (
+            <QuizCard key={quiz.id} quiz={quiz} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

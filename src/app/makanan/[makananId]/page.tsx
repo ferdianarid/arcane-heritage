@@ -1,10 +1,8 @@
-// app/DetailMakanan/page.tsx
 import { FoodCard } from "@/components/food-card";
 import Footer from "@/components/footer";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import Navbar from "@/components/navbar";
 import { Separator } from "@/components/ui/separator";
-import { foodData } from "@/data/foods-and-drinks";
 import Image from "next/image";
 import {
   Breadcrumb,
@@ -14,36 +12,41 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { BlogSection } from "@/components/moleculs/blog-section";
 import { FloatingAudio } from "@/components/floating-audio";
 import { notFound } from "next/navigation";
 import { ConciergeBell, MapPin } from "lucide-react";
+import { getAllFoods, getFoodById } from "@/servers/actions/foods/actions";
+import { getUrlFileImageFood } from "@/lib/supabase";
 
-interface DetailMakananProps {
+interface DetailFoodPrps {
   params: {
     makananId: string;
   };
 }
 
-const getMakananById = (id: string) => {
-  const makanan = foodData;
-  return makanan.find((food) => food.id.toString() === id);
-};
-
-export default function DetailMakanan({ params }: DetailMakananProps) {
+export default async function DetailBuilding({ params }: DetailFoodPrps) {
   const { makananId } = params;
 
-  const detailMakanan = getMakananById(makananId);
+  const foodDetail = await getFoodById(makananId);
 
-  if (!detailMakanan) {
+  console.log(foodDetail);
+
+  if (!foodDetail) {
     notFound();
   }
+
+  const allFoods = await getAllFoods();
+
+  const relatedFoods = allFoods
+    .filter((food) => food.id !== foodDetail.id)
+    .slice(0, 3);
+
   return (
     <>
       <header className="w-full">
         <div className="w-full relative pb-20 md:pb-32 bg-white">
           <Image
-            src={detailMakanan.image}
+            src={getUrlFileImageFood(foodDetail.image)}
             fill
             style={{ objectFit: "cover" }}
             alt="makanan"
@@ -67,7 +70,7 @@ export default function DetailMakanan({ params }: DetailMakananProps) {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>{detailMakanan?.name}</BreadcrumbPage>
+                  <BreadcrumbPage>{foodDetail?.name}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -76,7 +79,7 @@ export default function DetailMakanan({ params }: DetailMakananProps) {
             <div className="w-full md:w-[700px] mx-auto text-center grid gap-5">
               <BlurFade delay={0.5}>
                 <h1 className="font-normal text-6xl md:text-[140px] leading-[90%] font-italianno text-white">
-                  {detailMakanan?.name}
+                  {foodDetail?.name}
                 </h1>
               </BlurFade>
               <BlurFade delay={0.75}>
@@ -88,11 +91,11 @@ export default function DetailMakanan({ params }: DetailMakananProps) {
               <div className="w-fit flex mx-auto gap-10 items-center justify-between">
                 <div className="flex items-center">
                   <MapPin className="w-4 h-4 mr-1" />
-                  <span>{detailMakanan?.location}</span>
+                  <span>{foodDetail?.location}</span>
                 </div>
                 <div className="flex items-center">
                   <ConciergeBell className="w-4 h-4 mr-1" />
-                  <span>{detailMakanan?.category}</span>
+                  <span>{foodDetail?.category}</span>
                 </div>
               </div>
             </div>
@@ -102,17 +105,8 @@ export default function DetailMakanan({ params }: DetailMakananProps) {
 
       <section className="w-full px-5 md:px-[300px] max-w-[1440px] mx-auto pt-8 md:pt-16 grid gap-12">
         <p className="text-base md:text-[24px] leading-relaxed font-normal font-jakarta-sans text-white/80">
-          {detailMakanan.description}
+          {foodDetail?.description}
         </p>
-
-        {detailMakanan.foodSections &&
-          detailMakanan.foodSections.map((section, index) => (
-            <BlogSection
-              key={index}
-              title={section.title}
-              content={section.content}
-            />
-          ))}
       </section>
 
       <Separator className="my-12" />
@@ -123,23 +117,19 @@ export default function DetailMakanan({ params }: DetailMakananProps) {
         </h3>
 
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
-          {foodData.slice(0, 3).map((food) => (
+          {relatedFoods.slice(0, 3).map((food) => (
             <FoodCard key={food.name} food={food} />
           ))}
         </div>
       </section>
 
-      <FloatingAudio
-        textToRead="Gudeg, si manis dari Yogyakarta, bukan hanya sekadar makanan. Ia
-          adalah cerminan budaya, sejarah, dan filosofi Jawa yang kaya. Makanan
-          ini telah menjadi ikon kuliner yang tak terpisahkan dari kota
-          istimewa, menarik wisatawan dari seluruh penjuru dunia untuk mencicipi
-          keunikannya."
-      />
+      {!foodDetail.description ? (
+        ""
+      ) : (
+        <FloatingAudio textToRead={foodDetail.description} />
+      )}
 
       <Footer />
-
-      {/* <SpeakDock /> */}
     </>
   );
 }

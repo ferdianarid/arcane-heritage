@@ -96,14 +96,11 @@ const FormUpdateFood: FC<FormUpdateFoodProps> = ({ food }) => {
         action={formAction}
         className="mt-4 flex w-full px-5 flex-col gap-4 phone:my-4 pb-5"
       >
-        {/* ID makanan */}
         <input type="hidden" name="id" value={food?.id ?? ""} />
 
-        {/* simpan image lama */}
         <input type="hidden" name="oldImage" value={food?.image ?? ""} />
 
-        {/* Upload Image */}
-        <div className="relative w-[220px] flex aspect-square flex-col items-center justify-center gap-2 rounded-lg bg-[#1b1b1b]">
+        <div className="relative w-[180px] flex aspect-square flex-col items-center justify-center gap-2 rounded-lg bg-[#1b1b1b]">
           <input
             id="file-upload"
             name="image"
@@ -140,7 +137,6 @@ const FormUpdateFood: FC<FormUpdateFoodProps> = ({ food }) => {
           )}
         </div>
 
-        {/* Nama + Lokasi */}
         <div className="grid w-full grid-cols-2 gap-4">
           <LabelInputContainer>
             <Label htmlFor="name">Nama Makanan</Label>
@@ -165,7 +161,6 @@ const FormUpdateFood: FC<FormUpdateFoodProps> = ({ food }) => {
           </LabelInputContainer>
         </div>
 
-        {/* Deskripsi */}
         <LabelInputContainer>
           <Label htmlFor="description">Deskripsi</Label>
           <Textarea
@@ -177,7 +172,6 @@ const FormUpdateFood: FC<FormUpdateFoodProps> = ({ food }) => {
           />
         </LabelInputContainer>
 
-        {/* Rating, Reviews, Category */}
         <div className="grid w-full grid-cols-3 gap-4">
           <LabelInputContainer>
             <Label htmlFor="rating">Rating</Label>
