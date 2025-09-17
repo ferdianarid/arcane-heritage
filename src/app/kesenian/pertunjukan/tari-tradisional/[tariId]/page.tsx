@@ -19,18 +19,12 @@ import { MapPin, Landmark } from "lucide-react";
 import { danceData } from "@/data/dance";
 import { DanceCard } from "@/components/elements/dance-card";
 
-interface DetailTariProps {
-  params: {
-    tariId: string;
-  };
-}
-
 const getTariTradisionalById = (id: string) => {
   const dance = danceData;
   return dance.find((item) => item.id.toString() === id);
 };
 
-export default function DetailTari({ params }: DetailTariProps) {
+export default function DetailTari({ params }: { params: { tariId: string } }) {
   const { tariId } = params;
 
   const detailTari = getTariTradisionalById(tariId);
