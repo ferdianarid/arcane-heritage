@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Input } from "@/components/ui/input";
 import SettingsSection from "./setting-section";
 import { Textarea } from "@/components/ui/textarea";

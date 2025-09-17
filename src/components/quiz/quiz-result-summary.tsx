@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // src/components/quiz/QuizResultSummary.tsx
 "use client";
 
