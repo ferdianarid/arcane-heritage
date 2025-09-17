@@ -6,11 +6,12 @@ import QuizPlayer from "@/components/elements/quiz-player";
 import { Question } from "@/types/quiz";
 
 interface PageProps {
-  params: { categoryId: string };
+  params: Promise<{ categoryId: string }>;
 }
 
 export default async function Page({ params }: PageProps) {
-  const categoryId = params.categoryId;
+  const { categoryId } = await params;
+
   const categories = await getQuizCategories();
   const category = categories.find((c) => c.id === categoryId);
   const questions = await getQuestionsByCategory(categoryId);
