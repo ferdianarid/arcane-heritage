@@ -27,6 +27,13 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+
+export interface SignedInUser {
+  image: string;
+  email: string;
+  name: string;
+}
 
 const items = [
   {
@@ -66,16 +73,10 @@ const items = [
   },
 ];
 
-const data = {
-  user: {
-    name: "Ferdian Ahmad R",
-    email: "ferdianarid@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-};
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
+
+  const { data: session } = useSession();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="p-4">
@@ -109,7 +110,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={session?.user as SignedInUser} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

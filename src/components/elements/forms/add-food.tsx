@@ -12,6 +12,14 @@ import { MdCloudUpload } from "react-icons/md";
 import { LabelInputContainer } from "@/components/ui/gradient";
 import { Label } from "@/components/ui/label";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 const SubmitButton = () => {
   const { pending } = useFormStatus();
   return (
@@ -111,12 +119,15 @@ export function AddFoodForm() {
 
         <LabelInputContainer>
           <Label htmlFor="category">Kategori</Label>
-          <Input
-            id="category"
-            name="category"
-            placeholder="Ex. Masakan Tradisional"
-            type="text"
-          />
+          <Select name="category">
+            <SelectTrigger>
+              <SelectValue placeholder="Pilih kategori" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Makanan">Makanan</SelectItem>
+              <SelectItem value="Minuman">Minuman</SelectItem>
+            </SelectContent>
+          </Select>
         </LabelInputContainer>
       </div>
 

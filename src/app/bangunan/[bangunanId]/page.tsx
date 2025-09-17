@@ -110,6 +110,36 @@ export default async function DetailBuilding({
           {detailBuilding.description}
         </p>
 
+        <p className="text-base md:text-[24px] leading-relaxed font-normal font-jakarta-sans text-white/80">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
+          inventore minima voluptatum error aperiam molestias, at voluptate
+          assumenda ut eum soluta minus, deleniti voluptates id architecto
+          corrupti aspernatur laborum recusandae?
+        </p>
+        <p className="text-base md:text-[24px] leading-relaxed font-normal font-jakarta-sans text-white/80">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
+          inventore minima voluptatum error aperiam molestias, at voluptate
+          assumenda ut eum soluta minus, deleniti voluptates id architecto
+          corrupti aspernatur laborum recusandae?
+        </p>
+        <p className="text-base md:text-[24px] leading-relaxed font-normal font-jakarta-sans text-white/80">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa
+          inventore minima voluptatum error aperiam molestias, at voluptate
+          assumenda ut eum soluta minus, deleniti voluptates id architecto
+          corrupti aspernatur laborum recusandae?
+        </p>
+
+        <div className="relative w-full aspect-video">
+          <iframe
+            src="https://www.youtube.com/embed/nU0YTsgmQsY?si=_GsPKVfthAxv65yL"
+            title="YouTube video player"
+            className="absolute top-0 left-0 w-full h-full"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
+
         {detailBuilding.blogSections.map((section) => (
           <BlogSection
             key={section.id}

@@ -35,7 +35,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Greener for Enterprise
+                  Mobile App
                 </Link>
               </li>
               <li>
@@ -43,15 +43,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Greener for Consultants
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="#"
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Scope 3 Data Exchange
+                  Website App
                 </Link>
               </li>
             </ul>
@@ -59,14 +51,14 @@ export default function Footer() {
 
           {/* Resources */}
           <div>
-            <h3 className="text-xl font-semibold mb-6">Resources</h3>
+            <h3 className="text-xl font-semibold mb-6">Features</h3>
             <ul className="space-y-4">
               <li>
                 <Link
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Greener academy
+                  Bangunan
                 </Link>
               </li>
               <li>
@@ -74,7 +66,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Regulatory updates
+                  Makanan
                 </Link>
               </li>
               <li>
@@ -82,7 +74,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Glossary
+                  Tari Tradisional
                 </Link>
               </li>
               <li>
@@ -90,7 +82,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  FAQs
+                  Text to Speech
                 </Link>
               </li>
               <li>
@@ -98,7 +90,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Security centre
+                  Museum Panorama 360
                 </Link>
               </li>
               <li>
@@ -106,7 +98,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Glossary
+                  Video Introduction Detail
                 </Link>
               </li>
             </ul>
@@ -114,14 +106,14 @@ export default function Footer() {
 
           {/* About */}
           <div>
-            <h3 className="text-xl font-semibold mb-6">About</h3>
+            <h3 className="text-xl font-semibold mb-6">Social Media</h3>
             <ul className="space-y-4">
               <li>
                 <Link
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  How we&lsquo;re different
+                  Instagram
                 </Link>
               </li>
               <li>
@@ -129,7 +121,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Newsroom
+                  Facebook
                 </Link>
               </li>
               <li>
@@ -137,7 +129,7 @@ export default function Footer() {
                   href="#"
                   className="text-gray-300 hover:text-white transition-colors"
                 >
-                  Team & careers
+                  Linkedin
                 </Link>
               </li>
               <li>
