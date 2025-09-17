@@ -24,8 +24,12 @@ const getTariTradisionalById = (id: string) => {
   return dance.find((item) => item.id.toString() === id);
 };
 
-export default function DetailTari({ params }: { params: { tariId: string } }) {
-  const { tariId } = params;
+export default async function DetailTari({
+  params,
+}: {
+  params: Promise<{ tariId: string }>;
+}) {
+  const { tariId } = await params;
 
   const detailTari = getTariTradisionalById(tariId);
 
