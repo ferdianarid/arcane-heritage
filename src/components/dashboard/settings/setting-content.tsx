@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
 import SettingsSection from "./setting-section";
 import { Textarea } from "@/components/ui/textarea";
@@ -13,6 +15,8 @@ import {
 } from "@/components/ui/select";
 import { ChevronRight } from "lucide-react";
 import { SettingsState } from "@/types";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const SettingContent: React.FC<{
   activeSection: string;
@@ -20,6 +24,8 @@ const SettingContent: React.FC<{
   setState: React.Dispatch<React.SetStateAction<SettingsState>>;
 }> = ({ activeSection, state, setState }) => {
   const { darkMode, notifications, language } = state;
+
+  const { data: session } = useSession();
 
   const handleNotificationsChange = (type: string, checked: boolean) => {
     setState((prev: any) => ({
@@ -41,6 +47,38 @@ const SettingContent: React.FC<{
       case "profile":
         return (
           <>
+            <SettingsSection title="Foto Profil">
+              <div className="flex items-center space-x-4">
+                <div className="w-16 overflow-clip h-16 bg-green-600 rounded-full flex items-center justify-center relative">
+                  <Image
+                    src={session?.user?.image as string}
+                    fill
+                    alt="userimage"
+                  />
+                </div>
+                <div className="w-fit grid gap-2">
+                  <div className="flex items-center gap-10">
+                    <h1 className="font-bold text-white text-base">
+                      {!session ? "Loading..." : session?.user?.name}
+                    </h1>
+                    <p className="text-sm font-normal text-white/70">
+                      {session?.user?.email}
+                    </p>
+                  </div>
+                  <div>
+                    <Button className="bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                      Ubah Foto
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="text-gray-400 hover:text-white ml-2 transition-colors"
+                    >
+                      Hapus
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </SettingsSection>
             <SettingsSection title="Informasi Personal">
               <div className="space-y-4">
                 <div>
@@ -49,7 +87,8 @@ const SettingContent: React.FC<{
                   </label>
                   <Input
                     type="text"
-                    defaultValue="Ferdian Ahmad R"
+                    defaultValue={session?.user?.name as string}
+                    readOnly
                     className="bg-[#363636] border-none text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                 </div>
@@ -59,7 +98,8 @@ const SettingContent: React.FC<{
                   </label>
                   <Input
                     type="email"
-                    defaultValue="ferdianand@example.com"
+                    defaultValue={session?.user?.email as string}
+                    readOnly
                     className="bg-[#363636] border-none text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                   />
                 </div>
@@ -82,24 +122,6 @@ const SettingContent: React.FC<{
                     defaultValue="Administrator platform Arcane Heritage, berdedikasi untuk melestarikan warisan budaya Indonesia."
                     className="bg-[#363636] border-none text-white focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
                   />
-                </div>
-              </div>
-            </SettingsSection>
-            <SettingsSection title="Foto Profil">
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center">
-                  <span className="text-white font-semibold text-xl">FA</span>
-                </div>
-                <div>
-                  <Button className="bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                    Ubah Foto
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="text-gray-400 hover:text-white ml-2 transition-colors"
-                  >
-                    Hapus
-                  </Button>
                 </div>
               </div>
             </SettingsSection>
