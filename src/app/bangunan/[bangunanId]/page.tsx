@@ -23,16 +23,12 @@ import {
 } from "@/servers/actions/buildings/actions";
 import { getUrlFileImageBuilding } from "@/lib/supabase";
 
-type DetailBuildingPageProps = {
-  params: {
-    bangunanId: string;
-  };
-};
-
 export default async function DetailBuilding({
   params,
-}: DetailBuildingPageProps) {
-  const { bangunanId } = params;
+}: {
+  params: Promise<{ bangunanId: string }>;
+}) {
+  const { bangunanId } = await params;
 
   const detailBuilding = await getBuildingById(bangunanId);
 

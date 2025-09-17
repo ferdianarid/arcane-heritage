@@ -18,14 +18,12 @@ import { ConciergeBell, MapPin } from "lucide-react";
 import { getAllFoods, getFoodById } from "@/servers/actions/foods/actions";
 import { getUrlFileImageFood } from "@/lib/supabase";
 
-interface DetailFoodPrps {
-  params: {
-    makananId: string;
-  };
-}
-
-export default async function DetailBuilding({ params }: DetailFoodPrps) {
-  const { makananId } = params;
+export default async function DetailMakanan({
+  params,
+}: {
+  params: Promise<{ makananId: string }>;
+}) {
+  const { makananId } = await params;
 
   const foodDetail = await getFoodById(makananId);
 
