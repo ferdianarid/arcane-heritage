@@ -38,7 +38,7 @@ interface FoodListProps {
   foods: Food[];
 }
 
-export function FoodListDashboard({ foods }: FoodListProps) {
+export function FoodListDashboard({ foods = [] }: FoodListProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
