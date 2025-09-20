@@ -12,7 +12,7 @@ interface BuildingProps {
   buildings: Building[];
 }
 
-const BuildingPage: React.FC<BuildingProps> = ({ buildings }) => {
+const BuildingPage: React.FC<BuildingProps> = ({ buildings = [] }) => {
   console.log(buildings);
   return (
     <header className="w-full">
