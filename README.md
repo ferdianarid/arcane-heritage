@@ -21,6 +21,7 @@ Dilengkapi dengan video dan **Panorama View 360** di menu Museum, harapannya set
 - Quiz Interactive - https://arcaneheritage.vercel.app/quiz
 - Panorama 360deg (Street View 360) - (Work in progress) https://arcaneheritage.vercel.app/museum
 - Text to Speech : Building Card, Food Card, Building Detail, Food Detail
+- Dashboard (Manage All Data)
 
 ## Dashboard Features (Role as Contributor)
 
