@@ -38,7 +38,10 @@ interface QuizListProps {
   quizCategory: QuizCategories[];
 }
 
-export function QuizListDashboard({ quizzes, quizCategory }: QuizListProps) {
+export function QuizListDashboard({
+  quizzes = [],
+  quizCategory,
+}: QuizListProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 

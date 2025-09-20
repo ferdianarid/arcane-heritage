@@ -38,7 +38,7 @@ interface BuildingListProps {
   buildings: Building[];
 }
 
-export function BuildingListDashboard({ buildings }: BuildingListProps) {
+export function BuildingListDashboard({ buildings = [] }: BuildingListProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
