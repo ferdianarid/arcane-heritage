@@ -28,8 +28,6 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
-  const { data: session, status } = useSession();
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0) {
@@ -45,6 +43,12 @@ export default function Navbar() {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const sessionData = useSession();
+
+  if (!sessionData) return null;
+
+  const { data: session, status } = sessionData;
 
   return (
     <header

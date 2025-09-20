@@ -25,7 +25,11 @@ const SettingContent: React.FC<{
 }> = ({ activeSection, state, setState }) => {
   const { darkMode, notifications, language } = state;
 
-  const { data: session } = useSession();
+  const sessionData = useSession();
+
+  if (!sessionData) return null;
+
+  const { data: session, status } = sessionData;
 
   const handleNotificationsChange = (type: string, checked: boolean) => {
     setState((prev: any) => ({

@@ -75,8 +75,11 @@ const items = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { state } = useSidebar();
+  const sessionData = useSession();
 
-  const { data: session } = useSession();
+  if (!sessionData) return null;
+
+  const { data: session, status } = sessionData;
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="p-4">
